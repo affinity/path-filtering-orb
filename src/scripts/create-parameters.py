@@ -43,13 +43,13 @@ def merge_base(base, head):
     capture_output=True
   )
   if result.returncode != 0:
-    git_stderr = result.stderr.decode('utf-8').strip()
+    git_stderr = result.stderr.decode('utf-8', errors='replace').strip()
     if git_stderr:
       print(git_stderr, file=sys.stderr)
     print(f"""
 ERROR: Failed to determine the merge base of '{base}' and '{head}'.
 
-'git merge-base {base} {head}' exited non-zero. This usually means the
+'git merge-base {base} {head}' exited {result.returncode}. This usually means the
 repository was cloned with a shallow checkout and the merge base lies
 outside the fetched history window, i.e. this branch has not merged
 '{base}' recently.
@@ -59,6 +59,8 @@ To fix, update your branch and push:
     git fetch origin
     git merge origin/{base}
     git push
+
+(If your base-revision is not a branch, use 'git merge {base}' instead.)
 
 Then rerun the pipeline.""", file=sys.stderr)
     sys.exit(1)
