@@ -38,11 +38,31 @@ def get_github_org_from_url(git_url):
   return None
 
 def merge_base(base, head):
-  return subprocess.run(
+  result = subprocess.run(
     ['git', 'merge-base', base, head],
-    check=True,
     capture_output=True
-  ).stdout.decode('utf-8').strip()
+  )
+  if result.returncode != 0:
+    git_stderr = result.stderr.decode('utf-8').strip()
+    if git_stderr:
+      print(git_stderr, file=sys.stderr)
+    print(f"""
+ERROR: Failed to determine the merge base of '{base}' and '{head}'.
+
+'git merge-base {base} {head}' exited non-zero. This usually means the
+repository was cloned with a shallow checkout and the merge base lies
+outside the fetched history window, i.e. this branch has not merged
+'{base}' recently.
+
+To fix, update your branch and push:
+
+    git fetch origin
+    git merge origin/{base}
+    git push
+
+Then rerun the pipeline.""", file=sys.stderr)
+    sys.exit(1)
+  return result.stdout.decode('utf-8').strip()
 
 def extract_vcs_revision(json_data):
   """
