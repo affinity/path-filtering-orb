@@ -152,6 +152,17 @@ def parent_commit(merge_queue_support):
       capture_output=True
     ).stdout.decode('utf-8').strip()
 
+def merge_queue_entry_base(branch):
+  """
+  Return the commit a GitHub merge queue entry is built on, or None.
+
+  GitHub names queue branches gh-readonly-queue/<base-branch>/pr-<number>-<sha>,
+  where <sha> is the previous queue entry (or the base branch tip). Diffing from
+  merge-base(base-branch, HEAD) instead would include every PR ahead in the queue.
+  """
+  match = re.match(r'^gh-readonly-queue/.+/pr-\d+-([0-9a-f]{40})$', branch or '')
+  return match.group(1) if match else None
+
 def changed_files(base, head):
   return subprocess.run(
     ['git', '-c', 'core.quotepath=false', 'diff', '--name-only', base, head],
@@ -242,6 +253,11 @@ def create_parameters(output_path, config_path, head, base, mapping, merge_queue
   base = merge_base(base, head)
 
   print(f"Merge Queue support: {merge_queue_support}")
+
+  queue_base = merge_queue_entry_base(os.environ.get('CIRCLE_BRANCH'))
+  if merge_queue_support and queue_base:
+    print("Merge queue entry, using the commit it is built on as the base")
+    base = queue_base
 
   if head == base:
     try:
