@@ -1,5 +1,5 @@
 # Path Filtering Orb
-[![CircleCI Orb Version](https://badges.circleci.com/orbs/affinity/path-filtering-orb.svg)](https://circleci.com/developer/orbs/orb/affinity/path-filtering-orb) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/affinity/path-filtering-orb/master/LICENSE)
+[![CircleCI Orb Version](https://badges.circleci.com/orbs/affinity/path-filtering.svg)](https://circleci.com/developer/orbs/orb/affinity/path-filtering) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/affinity/path-filtering-orb/master/LICENSE)
 
 Additional READMEs are available in each directory.
 
@@ -11,7 +11,7 @@ Additional READMEs are available in each directory.
 
 [Setup Workflows Documentation](https://github.com/CircleCI-Public/api-preview-docs/blob/master/docs/setup-workflows.md#concepts) - Doc explaining a special type of workflow used in dynamic config
 
-[CircleCI Orb Registry Page](https://circleci.com/developer/orbs/orb/affinity/path-filtering-orb) - The official registry page of this orb for all versions, executors, commands, and jobs described.
+[CircleCI Orb Registry Page](https://circleci.com/developer/orbs/orb/affinity/path-filtering) - The official registry page of this orb for all versions, executors, commands, and jobs described.
 
 [CircleCI Orb Docs](https://circleci.com/docs/2.0/orb-intro/#section=configuration) - Docs for using, creating, and publishing CircleCI Orbs.
 
@@ -42,8 +42,8 @@ Publish it for use with:
 1. Merge pull requests with desired changes to the main branch.
     - For the best experience, squash-and-merge and use [Conventional Commit Messages](https://conventionalcommits.org/).
 2. Find the current version of the orb.
-    - You can run `circleci orb info circleci/path-filtering | grep "Latest"` to see the current version.
-3. Create a [new Release](https://github.com/CircleCI-Public/path-filtering-orb/releases/new) on GitHub.
+    - You can run `circleci orb info affinity/path-filtering | grep "Latest"` to see the current version.
+3. Create a [new Release](https://github.com/affinity/path-filtering-orb/releases/new) on GitHub.
     - Click "Choose a tag" and _create_ a new [semantically versioned](http://semver.org/) tag. (ex: v1.0.0)
       - We will have an opportunity to change this before we publish if needed after the next step.
 4.  Click _"+ Auto-generate release notes"_.
